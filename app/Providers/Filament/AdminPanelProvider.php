@@ -18,6 +18,26 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use App\Models\Producto;
+use Filament\Widgets\StatsOverviewWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+
+class ProductStatsWidget extends StatsOverviewWidget
+{
+    protected function getStats(): array
+    {
+        return [
+            Stat::make('Tienda de Abarrotes es un negocio familiar con raíces profundas en la comunidad de Nuevo Chimbote. Desde nuestros inicios en 2012, nos hemos dedicado a ofrecer productos de calidad, atención cercana y precios justos para todas las familias del barrio.
+Creemos que una tienda de abarrotes no es solo un lugar para comprar, sino un punto de encuentro donde se construyen relaciones de confianza. Nuestro compromiso es brindar un servicio cálido, rápido y eficiente, con una sonrisa siempre lista para recibirte.
+Nos especializamos en productos de primera necesidad: alimentos, bebidas, artículos de limpieza, cuidado personal y más. Trabajamos con marcas reconocidas y proveedores locales para asegurar frescura, variedad y abastecimiento constante.', Producto::count()),
+
+        ];
+    }
+
+    protected int|string|array $columnSpan = 'full';
+}
+
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -37,9 +57,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
+    Widgets\AccountWidget::class,
+    Widgets\FilamentInfoWidget::class,
+    ProductStatsWidget::class, // 👈 nuevo widget agregado
+])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -53,6 +74,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ;
     }
 }
