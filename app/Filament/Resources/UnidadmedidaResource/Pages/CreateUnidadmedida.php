@@ -9,4 +9,8 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateUnidadmedida extends CreateRecord
 {
     protected static string $resource = UnidadmedidaResource::class;
+
+    protected function getRedirectUrl(): string{
+        return $this->getResource()::getUrl('index');
+    }
 }

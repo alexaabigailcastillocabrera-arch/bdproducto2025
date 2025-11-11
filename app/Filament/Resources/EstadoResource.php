@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 
+
 class EstadoResource extends Resource
 {
     protected static ?string $model = Estado::class;
@@ -37,7 +38,7 @@ class EstadoResource extends Resource
                     ->label('ID')
                     ->sortable(),
 
-                TextColumn::make('nombre_estado')
+                TextColumn::make('nombre')
                     ->label('Estado')
                     ->searchable()
                     ->sortable(),

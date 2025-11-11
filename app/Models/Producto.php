@@ -16,40 +16,40 @@ class Producto extends Model
         'preciounitario',
         'cantidad_ingresada',
         'stock',
-        'modelo_id',
-        'marca_id',
-        'categoria_id',
-        'unidadmedida_id',
-        'estado_id',
+        'modelos_id',
+        'marcas_id',
+        'categorias_id',
+        'unidadmedidas_id',
+        'estados_id',
     ];
 
     // Un producto pertenece a un modelo
     public function modelo()
     {
-        return $this->belongsTo(Modelo::class, 'modelo_id');
+        return $this->belongsTo(Modelo::class, 'modelos_id');
     }
 
     // Un producto pertenece a una marca
     public function marca()
     {
-        return $this->belongsTo(Marca::class, 'marca_id');
+        return $this->belongsTo(Marca::class, 'marcas_id');
     }
 
     // Un producto pertenece a una categoría
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'categoria_id');
+        return $this->belongsTo(Categoria::class, 'categorias_id');
     }
 
     // Un producto pertenece a una unidad de medida
     public function unidadmedida()
     {
-        return $this->belongsTo(UnidadMedida::class, 'unidadmedida_id');
+        return $this->belongsTo(UnidadMedida::class, 'unidadmedidas_id');
     }
 
     // Un producto pertenece a un estado (por ejemplo: activo, inactivo)
     public function estado()
     {
-        return $this->belongsTo(Estado::class, 'estado_id');
+        return $this->belongsTo(Estado::class, 'estados_id');
     }
 }

@@ -24,63 +24,68 @@ class ProductoResource extends Resource
         return $form
             ->schema([
                 // Relaciones
-                Select::make('modelo_id')
+                Forms\Components\Select::make('modelos_id')
                     ->label('Modelo')
-                    ->relationship('modelo', 'descripcion_modelo')
+                    ->relationship('modelo', 'nombre_modelo')
+                    ->required()
                     ->searchable()
-                    ->required(),
+                    ->preload(),
 
-                Select::make('marca_id')
+                Forms\Components\Select::make('marcas_id')
                     ->label('Marca')
-                    ->relationship('marca', 'descripcion_marca')
+                    ->relationship('marca', 'nombre_marca')
+                    ->required()
                     ->searchable()
-                    ->required(),
+                    ->preload(),
 
-                Select::make('categoria_id')
+                Forms\Components\Select::make('categorias_id')
                     ->label('Categoría')
-                    ->relationship('categoria', 'descripcion_categorias')
+                    ->relationship('categoria', 'nombre_categorias')
+                    ->required()
                     ->searchable()
-                    ->required(),
+                    ->preload(),
 
-                Select::make('unidadmedida_id')
+                Forms\Components\Select::make('unidadmedidas_id')
                     ->label('Unidad de Medida')
-                    ->relationship('unidadmedida', 'descripcion_unidad')
+                    ->relationship('unidadmedida', 'nombre_unidad')
+                    ->required()
                     ->searchable()
-                    ->required(),
+                    ->preload(),
 
-                Select::make('estado_id')
+                Forms\Components\Select::make('estados_id')
                     ->label('Estado')
                     ->relationship('estado', 'nombre')
+                    ->required()
                     ->searchable()
-                    ->required(),
+                    ->preload(),
 
                 // Campos propios
-                TextInput::make('pnombre')
+                Forms\Components\TextInput::make('pnombre')
                     ->label('Nombre del Producto')
                     ->required()
                     ->maxLength(191),
 
-                TextInput::make('pdescripcion')
+                Forms\Components\TextInput::make('pdescripcion')
                     ->label('Descripción')
                     ->required()
                     ->maxLength(191),
 
-                TextInput::make('preciocompra')
+                Forms\Components\TextInput::make('preciocompra')
                     ->label('Precio de Compra')
                     ->numeric()
                     ->required(),
 
-                TextInput::make('preciounitario')
+                Forms\Components\TextInput::make('preciounitario')
                     ->label('Precio Unitario')
                     ->numeric()
                     ->required(),
 
-                TextInput::make('cantidad_ingresada')
+                Forms\Components\TextInput::make('cantidad_ingresada')
                     ->label('Cantidad Ingresada')
                     ->numeric()
                     ->required(),
 
-                TextInput::make('stock')
+                Forms\Components\TextInput::make('stock')
                     ->label('Stock Actual')
                     ->numeric()
                     ->required(),
@@ -92,23 +97,60 @@ class ProductoResource extends Resource
         return $table
             ->columns([
                 // Relaciones
-                TextColumn::make('modelo.descripcion_modelo')->label('Modelo')->sortable()->searchable(),
-                TextColumn::make('marca.descripcion_marca')->label('Marca')->sortable()->searchable(),
-                TextColumn::make('categoria.descripcion_categorias')->label('Categoría')->sortable()->searchable(),
-                TextColumn::make('unidadmedida.descripcion_unidad')->label('Unidad')->sortable()->searchable(),
-                TextColumn::make('estado.nombre')->label('Estado')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('modelo.nombre_modelo')
+                ->label('Modelo')
+                ->numeric()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('marca.nombre_marca')
+                ->label('Marca')
+                ->numeric()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('categoria.nombre_categorias')
+                ->label('Categoría')
+                ->numeric()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('unidadmedida.nombre_unidad')
+                ->label('Unidad')
+                ->numeric()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('estado.nombre')
+                ->label('Estado')
+                ->numeric()
+                ->sortable(),
 
                 // Campos propios
-                TextColumn::make('pnombre')->label('Producto')->searchable(),
-                TextColumn::make('pdescripcion')->label('Descripción')->limit(50),
-                TextColumn::make('preciocompra')->label('Precio Compra')->sortable(),
-                TextColumn::make('preciounitario')->label('Precio Unitario')->sortable(),
-                TextColumn::make('cantidad_ingresada')->label('Cantidad')->sortable(),
-                TextColumn::make('stock')->label('Stock')->sortable(),
+                Tables\Columns\TextColumn::make('pnombre')
+                ->label('Producto')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('pdescripcion')
+                ->label('Descripción')
+                ->limit(50),
+                Tables\Columns\TextColumn::make('preciocompra')
+                ->label('Precio Compra')
+                ->money()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('preciounitario')
+                ->label('Precio Unitario')
+                ->money()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('cantidad_ingresada')
+                ->label('Cantidad')
+                ->sortable(),
+                Tables\Columns\TextColumn::make('stock')
+                ->label('Stock')
+                ->sortable(),
 
                 // Fechas
-                TextColumn::make('created_at')->label('Creado')->dateTime()->sortable(),
-                TextColumn::make('updated_at')->label('Actualizado')->dateTime()->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                ->label('Creado')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                ->label('Actualizado')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([])
             ->actions([
